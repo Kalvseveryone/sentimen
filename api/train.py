@@ -44,11 +44,27 @@ print(f"Accuracy: {accuracy * 100:.2f}%")
 print("Confusion Matrix:")
 print(conf_matrix)
 
-# Save model and vectorizer
-with open(model_path, 'wb') as f:
-    pickle.dump(model, f)
-with open(vectorizer_path, 'wb') as f:
-    pickle.dump(vectorizer, f)
+import json
+
+# Extract params for manual prediction
+vocab = vectorizer.vocabulary_
+class_log_prior = model.class_log_prior_.tolist()
+feature_log_prob = model.feature_log_prob_.tolist()
+classes = model.classes_.tolist()
+
+model_data = {
+    'vocab': vocab,
+    'class_log_prior': class_log_prior,
+    'feature_log_prob': feature_log_prob,
+    'classes': classes
+}
+
+json_path = os.path.join(os.path.dirname(__file__), 'model_data.json')
+with open(json_path, 'w', encoding='utf-8') as f:
+    json.dump(model_data, f)
+
+print(f"Model data exported to {json_path}")
+
 
 print(f"Model saved to {model_path}")
 print(f"Vectorizer saved to {vectorizer_path}")
