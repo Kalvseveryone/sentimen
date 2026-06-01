@@ -123,6 +123,12 @@ function App() {
           </div>
         )}
       </main>
+      
+      <footer className="footer">
+        <br/><p>Dibuat oleh:</p>
+        <strong>Muhamad Haekal</strong><br/>
+        <span>23416255201066</span>
+      </footer>
     </div>
   )
 }
